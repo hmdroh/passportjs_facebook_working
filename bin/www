@@ -1,0 +1,15 @@
+var app = require("../app");
+var PORT = 3001; //non secure http
+var PORT_HTTPS = 3000; // https
+var fs = require("fs");
+var http = require("http");
+var https = require("https");
+
+var credintials = {key: fs.readFileSync("./etc/server.key", "utf8"),
+                  cert: fs.readFileSync("./etc/server.crt", "utf8")};
+
+var httpServer = http.createServer(app),
+    httpsServer = https.createServer(credintials, app);
+
+httpServer.listen(PORT);
+httpsServer.listen(PORT_HTTPS);
